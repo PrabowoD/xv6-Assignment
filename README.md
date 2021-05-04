@@ -1,7 +1,7 @@
 # Assignment 1 Operating System Class
 
- - Name: Mochammad Hanif Ramadhan
- - NIM : 1313619025
+ - Name: Prabowo Darmawi
+ - NIM : 1313619001
 
 # Notes
  - For code changes, please refer to [report.md](./report.md) file
