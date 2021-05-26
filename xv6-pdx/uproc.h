@@ -1,6 +1,3 @@
-#ifdef CS333_P2
-  #include "types.h"
-
 #ifndef UPROC_H
 #define UPROC_H
 #define STRMAX 32
@@ -19,5 +16,4 @@ struct uproc {
   uint size;
   char name[STRMAX];
 };
-#endif
 #endif
