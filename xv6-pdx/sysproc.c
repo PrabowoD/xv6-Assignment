@@ -10,6 +10,10 @@
 #include "pdx-kernel.h"
 #endif // PDX_XV6
 
+#ifdef CS333_P2
+  #include "uproc.h"
+#endif  // CS333_P2
+
 int
 sys_fork(void)
 {
@@ -98,6 +102,7 @@ sys_halt(void)
 }
 #endif // PDX_XV6
 
+#ifdef CS333_P1
 int
 sys_date(void)
 {
@@ -108,5 +113,74 @@ sys_date(void)
     cmostime(d);
     return 0;
   }
-  
 }
+#endif
+  
+#ifdef CS333_P2
+int
+sys_getuid(void)
+{
+  struct proc *curproc = myproc();
+  return curproc->uid;
+}
+
+int
+sys_getgid(void)
+{
+  struct proc *curproc = myproc();
+  return curproc->gid;
+}
+
+int
+sys_getppid(void)
+{
+  struct proc *curproc = myproc();
+  struct proc *parent = curproc->parent;
+  return parent != NULL ? parent->pid : 0;
+}
+
+int sys_setuid(void)
+{
+  uint uid;
+  struct proc *curproc = myproc();
+
+  if(argint(0, (int*)&uid) >= 0) {
+    if(uid >= 0 && uid <= 32767) {
+      curproc->uid = uid;
+      return 0;
+    }
+  }
+  return -1;
+}
+
+int sys_setgid(void)
+{
+  uint gid;
+  struct proc *curproc = myproc();
+
+  if(argint(0, (int*)&gid) >= 0) {
+    if(gid >= 0 && gid <= 32767) {
+      curproc->gid = gid;
+      return 0;
+    }
+  }
+
+  return -1;
+}
+
+int sys_getprocs(void)
+{
+  uint max;
+  struct uproc* proc;
+
+  if (argint(0,(int*)&max) >= 0) {
+    if (max == 1 || max == 16 || max == 64 || max == 72) {
+      if (argptr(1, (void*)&proc, sizeof(struct uproc)) >= 0) {
+        return getprocs(max, proc);
+      }
+    }
+  }
+
+  return -1;
+}
+#endif //CS333_P2 
